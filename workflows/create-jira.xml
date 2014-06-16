@@ -1,0 +1,70 @@
+<workflow>
+
+<!-- Let's wait for all agents to complete the previous steps before trying to open a JIRA ticket (if needed) -->
+<join />
+
+<execute runOnlyOnError="yes" runOnAny="1" precondition="'${TC.build.id}'!='0'"> 
+    <script type="python">
+    
+import json
+from base64 import b64encode
+from http.client import HTTPSConnection
+
+jira_url = '${JIRA_URL}'
+jira_login = '${JIRA_LOGIN}'
+jira_password = '${JIRA_PASSWORD}'
+jira_project = '${JIRA_PROJECT}'
+jira_issue_type = '${JIRA_ISSUE_TYPE}'
+jira_summary = '${JIRA_SUMMARY}'
+jira_description = '${JIRA_DESCRIPTION}'
+
+# if you want to know where I am getting these fields from (how I know there are such fields)
+# open your browser and type ${JIRA_URL}/rest/api/2/issue/createmeta
+data = {
+    "fields":
+    {
+        "project":
+        {
+            "key": jira_project
+        },
+        "summary": jira_summary,
+        "description": jira_description,
+        "issuetype":
+        {
+            "name": jira_issue_type
+        }
+    }
+}
+
+try:
+    json_data = json.dumps(data)
+    post_data = json_data.encode('utf-8')
+    
+    connection = HTTPSConnection(jira_url)
+    
+    credentials = str.encode(jira_login + ':' + jira_password)
+    userAndPass = b64encode(credentials).decode("ascii")
+    
+    headers = {}
+    headers['Authorization'] = 'Basic %s' % userAndPass
+    headers['Content-Type'] = 'application/json'
+    
+    connection.request('POST', '/rest/api/2/issue/', post_data, headers=headers)
+    res = connection.getresponse()
+    print("Status: ", res.status)
+    print("Reason: ", res.reason)
+
+    if res.status != 200 and res.status != 201:
+        print('ERROR: Failed to create a JIRA.')
+        exit(-1)
+    
+    print('JIRA is created successfully')
+    
+except:
+    print('ERROR: Issue creation failed.')
+    exit(-1)
+    
+    </script>
+</execute>
+
+</workflow>
