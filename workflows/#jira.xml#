@@ -1,0 +1,81 @@
+<workflow>
+    
+<!-- Commented out for FLEET-238 testing
+<execute role="dbdeployer" runOnlyOnError="yes">
+    <script type="python">
+import logging, urllib.request, sys, urllib.error, base64
+import json
+
+jira_url = '${JIRA_URL}'
+jira_login = '${JIRA_LOGIN}'
+jira_password = '${JIRA_PASSWORD}'
+jira_project = '${JIRA_PROJECT}'
+jira_summary = '${JIRA_SUMMARY}'
+jira_description = '${JIRA_DESCRIPTION}'
+jira_issue_type = '${JIRA_ISSUE_TYPE}'
+
+data = {
+    "fields":
+    {
+        "project":
+        {
+            "key": jira_project
+        },
+        "summary": jira_summary,
+        "description": jira_description,
+        "issuetype":
+        {
+            "name": jira_issue_type
+        },
+       "assignee": {
+           "name": jira_login
+        },
+        "reporter": {
+            "name": jira_login
+        }
+
+    }
+}
+
+json_data = json.dumps(data)
+post_data = json_data.encode('utf-8')
+
+headers = {}
+headers['Content-Type'] = 'application/json'
+
+hh = urllib.request.HTTPHandler()
+hsh = urllib.request.HTTPSHandler()
+hh.set_http_debuglevel(1)
+hsh.set_http_debuglevel(1)
+
+
+
+# Manually create authorization header.
+headers['Authorization'] = "Basic {0}".format(
+            base64.b64encode("{0}:{1}".format(jira_login, jira_password).encode('utf-8')).decode('utf-8'))
+
+opener = urllib.request.build_opener(hh, hsh)
+# ...and install it globally so it can be used with urlopen.
+urllib.request.install_opener(opener)
+
+# now do the request for a url
+req = urllib.request.Request(jira_url, post_data, headers)
+
+# send the request
+
+try:
+    res = urllib.request.urlopen(req)
+except urllib.error.HTTPError as e:
+    print(e)
+    print(e.hdrs)
+    exit(0)
+
+
+# res is a file-like object
+res.close()
+
+    </script>
+</execute>
+ -->
+
+</workflow>
