@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+ <workflow>
+  <transfer artifact="configurations.zip" to="${CONFIG_TMP_DIR}" cleanup="yes" explode="yes" maxAgents="20">
+  	<includes>
+		<include scope="wholePath" >.*?${environmentName}-${id}.*</include>
+	</includes>
+  </transfer>
+  
+  <execute command="copy-configs.bat">
+   <!-- This is the folder we want to copy our configs to -->
+   <environment name="COPY_DIR">${COPY_DIR}</environment>
+   
+   <!-- This is the path to the configurations we're fetching relative to the LEROY_HOME/resources folder -->
+   <environment name="INST_PATH">${BASEDIR}</environment>
+   
+   <!-- These will always remain the same since it is used to automatically construct the path to the proper configs -->
+   <environment name="ENVIRONMENT_NAME">${environmentName}</environment>
+   <environment name="AGENT_NAME">${id}</environment>
+  </execute>
+ </workflow>

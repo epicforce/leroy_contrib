@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<controller host="localhost" port="1337">
+  <properties>
+    <property name="global-controller-prop">this is global</property>
+  </properties>
+</controller>

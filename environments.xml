@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!--
+	This is an example environments.xml file. This file is used to describe your environments by
+	defining  the hosts in each environment and the roles each are in. Once you have defined a role
+	in a given environment, you must use that role in all environments. This constraint is in place
+	to ensure your deployment workflows do not break.
+	
+	Environment specific properties can be set in properties/${environmentName}.properties files. These
+	are set by default for an example and should be changes for proper usage.
+-->
+<environments>
+  <environment name="dev">
+   <properties>
+    <import file="properties/dev.properties" />
+   </properties>
+   <agents>
+   	<agent name="app01" roles="app" />
+   	<agent name="app02" roles="app" />
+   </agents>
+  </environment>
+  <environment name="test">
+  <properties>
+    <import file="properties/test.properties" />
+   </properties>
+   <agents>
+   	<agent name="app01" roles="app" />
+   	<agent name="app02" roles="app" />
+   </agents>	
+  </environment>
+  <environment name="stage">
+  <properties>
+    <import file="properties/stage.properties" />
+   </properties>
+   <agents>
+   	<agent name="app01" roles="app" />
+   	<agent name="app02" roles="app" />
+   </agents>
+  </environment>
+  <environment name="prod">
+  <properties>
+    <import file="properties/prod.properties" />
+   </properties>
+   <agents>
+   	<agent name="app01" roles="app" />
+   	<agent name="app02" roles="app" />
+   </agents>
+  </environment>
+</environments>

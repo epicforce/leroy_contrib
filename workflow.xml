@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<workflow maxAgentsRunning="10" lockerPath="/tmp/overrideLocker">
+  <properties>
+    <!-- import file="samples/sample.properties" / -->
+    <property name="feh">whatever</property>
+    <property name="override">You should see this.</property>
+  </properties>
+  <!--
+      transfer an artifact, then explode the zip file to a directory
+      defined by a property.  The artifact will be sent to the locker
+      first if the locker does not already have the file (MD5 check)
+      and unzipped to the "to".  The original file remains in the locker.
+  -->
+  <transfer    artifact="dbscripts.zip"
+          to="${tmpdir}"
+          explode="yes"
+          role="db" />
+  <transfer    artifact="php.zip"
+          to="${tmpdir}"
+          explode="yes"
+          role="web" />
+  <transfer    artifact="middleware.war"
+          to="${jboss_home}/deploy"
+          role="mw" />
+  <!--    Execute DB scripts before anything else runs.
+      The serial=yes means it waits for all previous
+      jobs to be done, then runs the job one at a time,
+      then continues.  Because the role = "db", this
+      will hold the workflow until the DB is done.
+  -->
+  <execute    command="dbdeploy.sh"
+          role="db"
+          serial="yes">
+    <arguments>
+      <argument>${tmpdir}/dbscripts</argument>
+    </arguments>
+  </execute>
+  <!--    This shows a post process script.  Post process scripts
+      are defined in another file, and map this "findYayString"
+      key to a set of strings and conditions.
+
+      Normally, execute scripts will be determined successful
+      or failed based on return code, but the postProcess
+      script overrides that and lets the script determine
+      success or failure.
+  -->
+  <execute    command="phpMoveAndResetHttp"
+          role="web"
+          postProcess="findYayString" />
+  <execute    command="restartJboss"
+          role="mw">
+      <environment name="JBOSS_HOME">sandwich</environment>
+  </execute>
+  <!--    Normally, no more steps are run after a step
+      fails.  However, this step will run even in case of
+      error.  Serial = yes makes sure that all the workflow
+      steps up to this point are finished running this
+      command, and then runs it one on a time on 
+      each agent.
+  -->
+  <execute    command="cleanup.sh"
+          serial="yes"
+          runOnError="yes" />
+</workflow>

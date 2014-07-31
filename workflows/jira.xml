@@ -1,0 +1,53 @@
+<execute>
+    <script type="python" runOnlyOnError="yes" role="dbdeployer">
+import json
+from http.client import HTTPSConnection
+from base64 import b64encode
+
+
+jira_url = '${JIRA_URL}'
+jira_login = '${JIRA_LOGIN}'
+jira_password = '${JIRA_PASSWORD}'
+jira_project = '${JIRA_PROJECT}'
+jira_summary = '${JIRA_SUMMARY}'
+jira_description = '${JIRA_DESCRIPTION}'
+jira_issue_type = '${JIRA_ISSUE_TYPE}'
+
+data = {
+    "fields":
+    {
+        "project":
+        {
+            "key": jira_project
+        },
+        "summary": jira_summary,
+        "description": jira_description,
+        "issuetype":
+        {
+            "name": jira_issue_type
+        }
+    }
+}
+
+json_data = json.dumps(data)
+post_data = json_data.encode('utf-8')
+
+connection = HTTPSConnection(jira_url)
+
+credentials = str.encode(jira_login + ':' + jira_password)
+userAndPass = b64encode(credentials).decode("ascii")
+
+headers = {}
+headers['Authorization'] = 'Basic %s' % userAndPass
+headers['Content-Type'] = 'application/json'
+
+try:
+    connection.request('POST', '/rest/api/2/issue/', post_data,
+                       headers=headers)
+    res = connection.getresponse()
+    print(res.status, res.reason)
+except:
+    print('Issue creation failed.')
+    exit(-1)
+    </script>
+</execute>

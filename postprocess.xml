@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<postprocess>
+  <script name="containsError" isFailure="yes">\[ERROR\]|error:</script>
+  <script name="oracleSqlplusError" isFailure="yes">^ERROR at line \d+:|^ERROR:|^ORA-\d+:|^\s+\[exec\] ERROR at line \d+:|^\s+\[exec\] ORA-\d+:|^SP2-\d+:|error while loading shared libraries</script>
+  <script name="hasPropertyString" isFailure="no">.*${errorProperty}.*</script>
+  <script isFailure="no" name="alreadyStopped">.*service has already been stop.*</script>
+  <script isFailure="yes" name="netStopErrors">.*(The service table is locked|The service table is full|The service is not|The service control|Invalid service|The requested pause|could not find|service control|A thread).*</script>
+  <script isFailure="yes" name="installservice">.*(The installation failed|Exception occurred while initializing the installation).*</script>
+  <script isFailure="yes" name="explode_error">Could not unlink</script>
+  <script isFailure="yes" name="copy_zero">.*(0 file|The system cannot find the path specified).*</script>
+  <script isFailure="yes" name="start_windows_service">.*(Access is denied|A system error has occurred|The service name is invalid|The service did not start due to a logon failure|The service cannot be started).*</script>
+  <script isFailure="yes" name="stop_windows_service">The service name is invalid</script>
+  <script isFailure="yes" name="svn_ssl">.*Error during SSL.*</script>
+</postprocess>

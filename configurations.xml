@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<workflow>
+<configuration resources="resources" artifact="configurations.zip">
+	
+<!-- For each role, you may specify what files/folders you want to include/exclude using regex as shown below
+	<role name="some_role">
+		<include>sql/.*</include>
+		<include>/powershell(/.*)?</include>
+
+		<exclude>(.*)?/?\.svn(/.*)?</exclude>
+		<exclude>/Services(/.*)?</exclude>
+		<exclude>/Tools(/.*)?</exclude>
+		<exclude>/Web(/.*)?</exclude>
+	</role>
+	
+	<role name="some_other_role">
+		<exclude>/Services/Reporting(/.*)?</exclude>
+	</role>
+-->
+</configuration>
+</workflow>
