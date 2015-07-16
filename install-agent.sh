@@ -6,7 +6,7 @@ if [ ${?} -ne 0 ]; then
 else
  echo "*/3 * * * *  cd ${PWD}; ${PWD}/check-agent-running.sh >> /dev/null 2>&1" >> /tmp/o
 fi
-
+${PWD}/check-agent-running.sh
 crontab /tmp/o
 rm -rf /tmp/o
 echo "== Agent installed in crontab running as: ${USER} =="
