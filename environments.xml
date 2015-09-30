@@ -10,36 +10,24 @@
 -->
 <environments>
   <environment name="dev">
-   <properties>
-    <import file="properties/dev.properties" />
-   </properties>
    <agents>
    	<agent name="app01" roles="app" />
    	<agent name="app02" roles="app" />
    </agents>
   </environment>
   <environment name="test">
-  <properties>
-    <import file="properties/test.properties" />
-   </properties>
    <agents>
    	<agent name="app01" roles="app" />
    	<agent name="app02" roles="app" />
    </agents>	
   </environment>
   <environment name="stage">
-  <properties>
-    <import file="properties/stage.properties" />
-   </properties>
    <agents>
    	<agent name="app01" roles="app" />
    	<agent name="app02" roles="app" />
    </agents>
   </environment>
   <environment name="prod">
-  <properties>
-    <import file="properties/prod.properties" />
-   </properties>
    <agents>
    	<agent name="app01" roles="app" />
    	<agent name="app02" roles="app" />
