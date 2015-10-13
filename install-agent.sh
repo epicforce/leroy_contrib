@@ -1,6 +1,6 @@
 #!/bin/bash
 PWD=`pwd`
-crontab -l | grep -v check-agent-running > /tmp/o
+crontab -l | grep -v ${PWD}/check-agent-running > /tmp/o
 if [ ${?} -ne 0 ]; then
  echo "*/3 * * * *  cd ${PWD}; ${PWD}/check-agent-running.sh > /dev/null 2>&1" > /tmp/o
 else
