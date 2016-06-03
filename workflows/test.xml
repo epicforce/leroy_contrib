@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<workflow>
+	<execute command="test.sh" precondition="
+		'${agent.OS}' = 'AIX-00F604884C00' or
+		'${agent.OS}' = 'Linux-i686' or
+		'${agent.OS}' = 'Linux-x86_64' or
+		'${agent.OS}' = 'SunOS-i86pc' or
+		'${agent.OS}' = 'SunOS-sun4u' or
+		'${agent.OS}' = 'Darwin'
+	" />
+
+	<execute command="test.bat" precondition="
+		'${agent.OS}' = 'Win64' or 
+		'${agent.OS}' = 'Win32'
+	" />
+</workflow>
