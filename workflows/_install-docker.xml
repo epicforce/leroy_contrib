@@ -1,4 +1,25 @@
 <workflow>
-<transfer file="${DOCKER_PACKAGE_NAME}" to="${TMP_DIR}" />
-<execute command="install-docker.sh" />
+<!-- Linux Install -->
+<transfer file="${DOCKER_PACKAGE_NAME}" to="${TMP_DIR}" precondition="
+		'${agent.OS}' = 'AIX-00F604884C00' or
+		'${agent.OS}' = 'Linux-i686' or
+		'${agent.OS}' = 'Linux-x86_64' or
+		'${agent.OS}' = 'SunOS-i86pc' or
+		'${agent.OS}' = 'SunOS-sun4u' or
+		'${agent.OS}' = 'Darwin'"
+</transfer>
+  
+<!-- Unix Install -->
+<execute command="install-docker.sh" precondition="
+		'${agent.OS}' = 'AIX-00F604884C00' or
+		'${agent.OS}' = 'Linux-i686' or
+		'${agent.OS}' = 'Linux-x86_64' or
+		'${agent.OS}' = 'SunOS-i86pc' or
+		'${agent.OS}' = 'SunOS-sun4u' or
+		'${agent.OS}' = 'Darwin'"
+/>
+
+<transfer file="${DOCKER_PACKAGE_NAME}" to="${TMP_DIR}"	precondition="'${agent.OS}' = 'Win64'" />
+<execute command="install-docker.bat" precondition="'${agent.OS}' = 'Win64'" />
+
 </workflow>
