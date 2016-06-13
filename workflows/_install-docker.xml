@@ -10,7 +10,7 @@
 </transfer>
   
 <!-- Unix Install -->
-<execute command="install-docker.sh" precondition="
+<execute command="bash/install-docker.sh" precondition="
 		'${agent.OS}' = 'AIX-00F604884C00' or
 		'${agent.OS}' = 'Linux-i686' or
 		'${agent.OS}' = 'Linux-x86_64' or
