@@ -1,5 +1,5 @@
 <workflow>
-<!-- Linux Install -->
+<!-- Unix/Linux Install -->
 <transfer file="${DOCKER_PACKAGE_NAME}" to="${TMP_DIR}" precondition="
 		'${agent.OS}' = 'AIX-00F604884C00' or
 		'${agent.OS}' = 'Linux-i686' or
@@ -9,7 +9,6 @@
 		'${agent.OS}' = 'Darwin'"
 </transfer>
   
-<!-- Unix Install -->
 <execute command="bash/install-docker.sh" precondition="
 		'${agent.OS}' = 'AIX-00F604884C00' or
 		'${agent.OS}' = 'Linux-i686' or
@@ -19,6 +18,7 @@
 		'${agent.OS}' = 'Darwin'"
 />
 
+<!-- Windows Install -->
 <transfer file="${DOCKER_PACKAGE_NAME}" to="${TMP_DIR}"	precondition="'${agent.OS}' = 'Win64'" />
 <execute command="windows-bat/install-docker.bat" precondition="'${agent.OS}' = 'Win64'" />
 
