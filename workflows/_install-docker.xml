@@ -20,6 +20,6 @@
 />
 
 <transfer file="${DOCKER_PACKAGE_NAME}" to="${TMP_DIR}"	precondition="'${agent.OS}' = 'Win64'" />
-<execute command="install-docker.bat" precondition="'${agent.OS}' = 'Win64'" />
+<execute command="windows-bat/install-docker.bat" precondition="'${agent.OS}' = 'Win64'" />
 
 </workflow>
