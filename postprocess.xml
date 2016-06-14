@@ -2,7 +2,6 @@
 <postprocess>
   <script name="containsError" isFailure="yes">\[ERROR\]|error:</script>
   <script name="oracleSqlplusError" isFailure="yes">^ERROR at line \d+:|^ERROR:|^ORA-\d+:|^\s+\[exec\] ERROR at line \d+:|^\s+\[exec\] ORA-\d+:|^SP2-\d+:|error while loading shared libraries</script>
-  <script name="hasPropertyString" isFailure="no">.*${errorProperty}.*</script>
   <script isFailure="no" name="alreadyStopped">.*service has already been stop.*</script>
   <script isFailure="yes" name="netStopErrors">.*(The service table is locked|The service table is full|The service is not|The service control|Invalid service|The requested pause|could not find|service control|A thread).*</script>
   <script isFailure="yes" name="installservice">.*(The installation failed|Exception occurred while initializing the installation).*</script>
