@@ -1,4 +1,9 @@
 <?xml version="1.0"?>
+<!-- 
+   This is a postprocess file that contains strings that determine if a shell command is an error.
+   We use this because there are many programs out there that error but still return zero to the shell.
+   Usage: <execute command="script.py" postProcess="containsError" />
+-->
 <postprocess>
   <script name="containsError" isFailure="yes">\[ERROR\]|error:</script>
   <script name="oracleSqlplusError" isFailure="yes">^ERROR at line \d+:|^ERROR:|^ORA-\d+:|^\s+\[exec\] ERROR at line \d+:|^\s+\[exec\] ORA-\d+:|^SP2-\d+:|error while loading shared libraries</script>
