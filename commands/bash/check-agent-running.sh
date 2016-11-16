@@ -1,25 +1,25 @@
-#!/bin/bash
+#!/bin/sh
 #
 #
-# Specify BASE_DIR where agent is installed and call this script with cron to keep agent alive.
-#
-BASE_DIR=/opt/leroy/agent
+# Call this script with cron to keep the agent existing in the same directory alive.
+
+BASE_DIR=`dirname $0`
 PID_FILE=${BASE_DIR}/agent.pid
 
 startAgent(){
         touch ${PID_FILE}
-        bash ${BASE_DIR}/agent ${PID_FILE} > /dev/null 2>&1 &
-        echo ${!} > ${BASE_DIR}/agent.pid
+        ${BASE_DIR}/agent >> ${BASE_DIR}/.start_agent.out 2>&1 &
+        echo ${!} > ${PID_FILE}
 }
 
 if [ -f ${PID_FILE} ]; then
-        PID=${PID_FILE}
-        ps `cat ${PID_FILE}` > /dev/null 2>&1
-        if [ $? -eq 0 ]; then
-                exit 0
-        else
-                startAgent
+        PID="`cat ${PID_FILE}`"
+        if [ "$PID" != "" ]; then
+                ps "$PID" | grep --silent -w agent
+                if [ $? -eq 0 ]; then
+                        exit 0
+                fi
         fi
-else
-        startAgent
 fi
+
+startAgent
